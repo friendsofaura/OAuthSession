@@ -1,0 +1,32 @@
+{
+    "name": "friendsofaura/oauthsession",
+    "type": "library",
+    "description": "Aura session storage in Lusitanian PHP oauth library",
+    "keywords": [ "session", "oauth", "aura" ],
+    "homepage": "https://github.com/friendsofaura/OAuthSession",
+    "license": "BSD-2-Clause",
+    "authors": [
+        {
+            "name": "Friends of Aura Contributors",
+            "homepage": "https://github.com/friendsofaura/OAuthSession/contributors"
+        }
+    ],
+    "require": {
+        "aura/session":"~1.0",        
+        "lusitanian/oauth": "dev-master"
+    },
+    "autoload": {
+        "classmap": ["src/"],
+        "psr-0": {
+            "Aura\\Session": "vendor/aura/session/tests/"
+        }
+    },
+    "extra": {
+        "aura": {
+            "type": "kernel"
+        },
+        "branch-alias": {
+            "dev-develop": "1.0.x-dev"
+        }
+    }
+}
