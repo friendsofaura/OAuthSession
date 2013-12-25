@@ -19,7 +19,7 @@ class AuraSession implements TokenStorageInterface
      * @var string
      * 
      */
-    protected $sessionVariableName;
+    private $sessionVariableName;
 
     /**
      * 
@@ -70,7 +70,7 @@ class AuraSession implements TokenStorageInterface
         $serializedToken = serialize($token);
         // get previously saved tokens
         $segment = $this->session->newSegment($this->sessionVariableName);
-        $segment->{$service} = $serializedToken;
+        $segment->{$service} = $serializedToken;        
         // save session
         $this->session->commit();
                 
