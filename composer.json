@@ -16,10 +16,7 @@
         "lusitanian/oauth": "dev-master"
     },
     "autoload": {
-        "classmap": ["src/"],
-        "psr-0": {
-            "Aura\\Session": "vendor/aura/session/tests/"
-        }
+        "classmap": ["src/"]
     },
     "extra": {
         "aura": {
