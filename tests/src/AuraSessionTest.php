@@ -26,7 +26,7 @@ class AuraSessionTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        // session_set_save_handler(new MockSessionHandler);
+        session_set_save_handler(new MockSessionHandler);
         $this->session = $this->newSession();
         $this->storage = new AuraSession($this->session);
     }
@@ -70,12 +70,11 @@ class AuraSessionTest extends \PHPUnit_Framework_TestCase
         $service_2 = 'Foursquare';
 
         $token_1 = new StdOAuth2Token('access_1', 'refresh_1', StdOAuth2Token::EOL_NEVER_EXPIRES, array('extra' => 'param'));
-        $token_2 = new StdOAuth2Token('access_2', 'refresh_2', StdOAuth2Token::EOL_NEVER_EXPIRES, array('extra' => 'param'));
-
+        $token_2 = new StdOAuth2Token('access_2', 'refresh_2', StdOAuth2Token::EOL_NEVER_EXPIRES, array('extra' => 'param'));        
         // act
         $this->storage->storeAccessToken($service_1, $token_1);
         $this->storage->storeAccessToken($service_2, $token_2);
-
+        
         // assert
         // $extraParams = $this->storage->retrieveAccessToken($service_1)->getExtraParams();
         // $this->assertEquals('param', $extraParams['extra']);

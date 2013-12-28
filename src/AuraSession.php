@@ -12,7 +12,14 @@ class AuraSession implements TokenStorageInterface
      * Aura\Session\Manager
      * 
      */
-    private $session;
+    private $session_manager;
+    
+    /**
+     * 
+     * Aura\Session\Segment
+     * 
+     */
+    private $segment;
     
     /**
      * 
@@ -50,7 +57,7 @@ class AuraSession implements TokenStorageInterface
     {        
         if ($this->hasAccessToken($service)) {
             // get from session
-            $segment = $this->session->newSegment($this->sessionVariableName);
+            $segment = $this->getSessionSegment();            
 
             // one item
             return unserialize($segment->{$service});
@@ -69,7 +76,7 @@ class AuraSession implements TokenStorageInterface
     {
         $serializedToken = serialize($token);
         // get previously saved tokens
-        $segment = $this->session->newSegment($this->sessionVariableName);
+        $segment = $this->getSessionSegment();
         $segment->{$service} = $serializedToken;        
         // save session
         $this->session->commit();
@@ -86,7 +93,7 @@ class AuraSession implements TokenStorageInterface
     public function hasAccessToken($service)
     {
         // get from session
-        $segment = $this->session->newSegment($this->sessionVariableName);
+        $segment = $this->getSessionSegment();
 
         return isset($segment->{$service});
     }
@@ -101,7 +108,7 @@ class AuraSession implements TokenStorageInterface
     public function clearToken($service)
     {
         // get previously saved tokens
-        $segment = $this->session->newSegment($this->sessionVariableName);
+        $segment = $this->getSessionSegment();
         if ($this->hasAccessToken($service)) {
             unset($segment->{$service});
         }        
@@ -118,10 +125,27 @@ class AuraSession implements TokenStorageInterface
     */
     public function clearAllTokens()
     {
-        $segment = $this->session->newSegment($this->sessionVariableName);
+        $segment = $this->getSessionSegment();
         $segment->clear();
         $this->session->commit();
         // allow chaining
         return $this;
+    }
+    
+    /**
+     * 
+     * The session segment should be always available, 
+     * 
+     * else you are creating new objects
+     * 
+     * @return Aura\Session\Segment
+     * 
+     */
+    public function getSessionSegment()
+    {
+        if (! $this->segment) {
+            $this->segment = $this->session->newSegment($this->sessionVariableName);
+        }
+        return $this->segment;
     }
 }
